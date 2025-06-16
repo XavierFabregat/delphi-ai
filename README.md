@@ -2,8 +2,8 @@
 
 ## TODO:
 
-- [ ] Make it deploy
-- [ ] set up db
+- [x] Make it deploy
+- [x] set up db
 - [ ] attach db to ui
 - [ ] add auth (w/ clerk)
 - [ ] add ai api interaction
