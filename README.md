@@ -10,3 +10,15 @@
 - [ ] attach db to ui
 - [ ] add ai api interaction
 - [ ] Error management (w/ Sentry)
+
+## Possible theme:
+
+- Primary: #0F172A (Midnight)
+
+- Accent: #7C3AED (Violet)
+
+- Secondary Accent: #14B8A6 (Teal)
+
+- Background: #0F172A
+
+- Text: #F1F5F9

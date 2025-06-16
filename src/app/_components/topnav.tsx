@@ -1,5 +1,6 @@
 import { SignedOut, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";
 import { ModeToggle } from "./mode-toggle";
+import { Button } from "~/components/ui/button";
 
 export default function TopNav() {
   return (
@@ -9,7 +10,11 @@ export default function TopNav() {
         <div className="flex flex-row items-center gap-4 px-5">
           <ModeToggle />
           <SignedOut>
-            <SignInButton />
+            <SignInButton>
+              <Button className="bg-accent text-background hover:bg-accent-foreground hover:text-accent">
+                Sign In
+              </Button>
+            </SignInButton>
           </SignedOut>
           <SignedIn>
             <UserButton />

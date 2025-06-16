@@ -1,15 +1,8 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist } from "next/font/google";
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { Inter } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import TopNav from "./_components/topnav";
 import { ThemeProvider } from "../components/theme-provider";
 
@@ -19,9 +12,9 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const geist = Geist({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-geist-sans",
+  variable: "--font-inter",
 });
 
 export default function RootLayout({
@@ -29,7 +22,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
+      <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
         <body>
           <ThemeProvider
             attribute="class"
@@ -39,7 +32,7 @@ export default function RootLayout({
           >
             <div className="grid h-screen grid-rows-[auto_1fr]">
               <TopNav />
-              {children}
+              <main className="overflow-y-scroll">{children}</main>
             </div>
           </ThemeProvider>
         </body>
