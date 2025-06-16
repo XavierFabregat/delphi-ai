@@ -11,6 +11,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import TopNav from "./_components/topnav";
+import { ThemeProvider } from "../components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -28,12 +29,19 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${geist.variable}`}>
+      <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
         <body>
-          <div className="grid h-screen grid-rows-[auto_1fr]">
-            <TopNav />
-            {children}
-          </div>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="grid h-screen grid-rows-[auto_1fr]">
+              <TopNav />
+              {children}
+            </div>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
