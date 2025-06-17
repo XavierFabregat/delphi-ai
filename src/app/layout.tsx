@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import TopNav from "./_components/topnav";
 import { ThemeProvider } from "../components/theme-provider";
+import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -30,10 +31,12 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="grid h-screen grid-rows-[auto_1fr]">
-              <TopNav />
-              <main className="overflow-y-scroll">{children}</main>
-            </div>
+            <SidebarProvider>
+              <div className="grid h-screen w-screen grid-rows-[auto_1fr]">
+                <TopNav />
+                <main className="overflow-y-scroll">{children}</main>
+              </div>
+            </SidebarProvider>
           </ThemeProvider>
         </body>
       </html>
