@@ -229,3 +229,43 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes bounce-left {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(-4px);
+  }
+}
+
+@keyframes bounce-right {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(8px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.hover-bounce-left:hover {
+  animation: bounce-left 0.6s ease;
+}
+
+.hover-bounce-right:hover {
+  animation: bounce-right 0.6s ease;
+}
