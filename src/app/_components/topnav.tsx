@@ -2,6 +2,8 @@ import { SignedOut, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";
 import { ModeToggle } from "./mode-toggle";
 import { Button } from "~/components/ui/button";
 import { SidebarTrigger } from "../../components/ui/sidebar";
+import SlashSeparator from "./slash-separator";
+import BusinessCombobox from "./busines-selector-combobox";
 
 export default function TopNav() {
   return (
@@ -11,6 +13,8 @@ export default function TopNav() {
           <SidebarTrigger />
         </div>
         <div>DelphiAI</div>
+        <SlashSeparator />
+        <BusinessCombobox />
       </div>
       <div>
         <div className="flex flex-row items-center gap-4 px-5">
