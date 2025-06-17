@@ -35,7 +35,7 @@ export const businessIdeas = createTable(
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     name: d.varchar("name", { length: 128 }).notNull(),
-    concept: d.text("concept").notNull(),
+    concept: d.text("concept"),
     createdAt: d
       .timestamp({ withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
