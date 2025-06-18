@@ -19,25 +19,15 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import { useMediaQuery } from "~/hooks/use-media-query";
-import { Drawer, DrawerContent, DrawerTrigger } from "~/components/ui/drawer";
 import { CommandSeparator } from "cmdk";
+import { redirect } from "next/navigation";
+import { type Project } from "~/types";
 
-const projects = [
-  {
-    value: "delphi-ai",
-    label: "Delphi AI",
-  },
-  {
-    value: "cheesecake-chic",
-    label: "Cheesecake Chic",
-  },
-  {
-    value: "thing-in",
-    label: "Thing In",
-  },
-];
-
-export default function BusinessCombobox() {
+export default function BusinessCombobox({
+  projects,
+}: {
+  projects: Project[];
+}) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
@@ -54,7 +44,7 @@ export default function BusinessCombobox() {
             className="w-[200px] justify-between"
           >
             {value
-              ? projects.find((project) => project.value === value)?.label
+              ? projects.find((project) => project.name === value)?.name
               : "Select project..."}
             <ChevronsUpDown className="opacity-50" />
           </Button>
@@ -67,18 +57,18 @@ export default function BusinessCombobox() {
               <CommandGroup>
                 {projects.map((project) => (
                   <CommandItem
-                    key={project.value}
-                    value={project.value}
+                    key={project.id}
+                    value={project.name}
                     onSelect={(currentValue) => {
                       setValue(currentValue === value ? "" : currentValue);
                       setOpen(false);
                     }}
                   >
-                    {project.label}
+                    {project.name}
                     <Check
                       className={cn(
                         "ml-auto",
-                        value === project.value ? "opacity-100" : "opacity-0",
+                        value === project.name ? "opacity-100" : "opacity-0",
                       )}
                     />
                   </CommandItem>
@@ -89,8 +79,8 @@ export default function BusinessCombobox() {
                 <CommandItem
                   value="create"
                   onSelect={() => {
-                    setValue("");
                     setOpen(false);
+                    redirect("/dashboard/projects/create");
                   }}
                 >
                   <span className="text-xl">+</span>Create new project

@@ -20,7 +20,7 @@ export const reportTypeEnum = pgEnum("report_type", [
 export const users = createTable(
   "users",
   (d) => ({
-    id: d.uuid("id").primaryKey(), // Clerk User ID
+    id: d.varchar("id", { length: 256 }).primaryKey(), // Clerk User ID
     email: d.varchar("email", { length: 256 }).notNull().unique(),
   }),
   (t) => [index("email_idx").on(t.email)],
@@ -31,7 +31,7 @@ export const businessIdeas = createTable(
   (d) => ({
     id: d.uuid("id").primaryKey().defaultRandom(),
     userId: d
-      .uuid("user_id")
+      .varchar("user_id", { length: 256 })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     name: d.varchar("name", { length: 128 }).notNull(),

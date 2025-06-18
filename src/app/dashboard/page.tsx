@@ -1,12 +1,19 @@
-import CustomSidebarTrigger from "./_components/custom-sidebar-trigger";
+import { getMyProjects } from "~/server/queries";
+import ProjectCard from "./_components/project-card";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const projects = await getMyProjects();
+
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center">
-      <div>Dashboard</div>
-      <div className="absolute bottom-5 left-5 z-50">
-        <CustomSidebarTrigger />
+    <div className="relative flex h-full w-full items-start justify-center">
+      <div className="flex h-full w-3/4 flex-wrap items-center justify-center overflow-y-scroll">
+        {[...projects, ...projects, ...projects, ...projects].map(
+          (project, index) => (
+            <ProjectCard project={project} key={project.id + "" + index} />
+          ),
+        )}
       </div>
+      <div className="border-foreground h-full w-1/4 border-l">Rest</div>
     </div>
   );
 }

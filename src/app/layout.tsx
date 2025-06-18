@@ -5,7 +5,8 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import TopNav from "./_components/topnav";
 import { ThemeProvider } from "../components/theme-provider";
-import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
+import { SidebarProvider } from "../components/ui/sidebar";
+import QueryProvider from "../providers/react-query";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -25,19 +26,21 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <SidebarProvider>
-              <div className="grid h-screen w-screen grid-rows-[auto_1fr]">
-                <TopNav />
-                <main className="overflow-y-scroll">{children}</main>
-              </div>
-            </SidebarProvider>
-          </ThemeProvider>
+          <QueryProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <SidebarProvider>
+                <div className="grid h-screen w-screen grid-rows-[auto_1fr]">
+                  <TopNav />
+                  <main className="overflow-y-scroll">{children}</main>
+                </div>
+              </SidebarProvider>
+            </ThemeProvider>
+          </QueryProvider>
         </body>
       </html>
     </ClerkProvider>

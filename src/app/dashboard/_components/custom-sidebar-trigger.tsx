@@ -10,7 +10,7 @@ export default function CustomSidebarTrigger() {
   return (
     <Button
       onClick={toggleSidebar}
-      className={`hover:text-accent flex items-center justify-center rounded-full border-0 bg-transparent p-2 text-white hover:bg-transparent ${
+      className={`hover:text-accent text-foreground flex items-center justify-center rounded-full border-0 bg-transparent p-2 shadow-none hover:bg-transparent ${
         state === "expanded" ? "hover-bounce-left" : "hover-bounce-right"
       }`}
     >

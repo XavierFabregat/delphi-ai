@@ -1,17 +1,18 @@
-import {
-  SidebarTrigger,
-  SidebarProvider,
-  SidebarInset,
-} from "~/components/ui/sidebar";
+import CustomSidebarTrigger from "./_components/custom-sidebar-trigger";
 import SideMenu from "./_components/sidemenu";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="flex h-full w-full">
       <SideMenu />
-      <div className="w-full">{children}</div>
+      <div className="relative w-full">
+        {children}
+        <div className="absolute bottom-5 left-5 z-50">
+          <CustomSidebarTrigger />
+        </div>
+      </div>
     </div>
   );
 }

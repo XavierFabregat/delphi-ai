@@ -3,14 +3,17 @@ import { ModeToggle } from "./mode-toggle";
 import { Button } from "~/components/ui/button";
 import SlashSeparator from "./slash-separator";
 import BusinessCombobox from "./busines-selector-combobox";
+import { getMyProjects } from "../../server/queries";
 
-export default function TopNav() {
+export default async function TopNav() {
+  const projects = await getMyProjects();
+
   return (
-    <nav className="bg-background border-foreground z-20 flex w-full items-center justify-between border-b p-4 text-xl font-semibold">
+    <nav className="bg-background border-foreground z-20 flex w-full items-center justify-between border-b p-4 px-10 text-xl font-semibold">
       <div className="flex items-center gap-2">
         <div>DelphiAI</div>
         <SlashSeparator />
-        <BusinessCombobox />
+        <BusinessCombobox projects={projects} />
       </div>
       <div>
         <div className="flex flex-row items-center gap-4 px-5">
