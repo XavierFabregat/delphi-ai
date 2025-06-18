@@ -28,14 +28,16 @@ import { setSelectedProject } from "../../lib/features/projects/projects-slice";
 
 export default function BusinessCombobox({
   projects,
+  selectedProject,
 }: {
   projects: Project[];
+  selectedProject: Project | undefined;
 }) {
   const dispatch = useAppDispatch();
   const project = useAppSelector((state) => state.projects);
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(project.selectedProject?.name);
-  const [id, setId] = React.useState(project.selectedProject?.id);
+  const [value, setValue] = React.useState(selectedProject?.name);
+  const [id, setId] = React.useState(selectedProject?.id);
   const router = useRouter();
 
   useEffect(() => {

@@ -18,7 +18,10 @@ export default async function TopNav() {
       <div className="flex items-center gap-2">
         <div>DelphiAI</div>
         <SlashSeparator />
-        <BusinessCombobox projects={projects} />
+        <BusinessCombobox
+          projects={projects}
+          selectedProject={selectedProject}
+        />
       </div>
       <div>
         <div className="flex flex-row items-center gap-4 px-5">
