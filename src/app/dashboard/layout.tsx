@@ -9,7 +9,7 @@ export default async function DashboardLayout({
       <SideMenu />
       <div className="relative w-full">
         {children}
-        <div className="absolute bottom-5 left-5 z-50">
+        <div className="absolute bottom-5 left-1 z-50">
           <CustomSidebarTrigger />
         </div>
       </div>
