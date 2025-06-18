@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 import { Button } from "~/components/ui/button";
 import {
   Command,
@@ -18,18 +18,43 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
-import { useMediaQuery } from "~/hooks/use-media-query";
+import { useMediaQuery } from "~/lib/hooks/use-media-query";
 import { CommandSeparator } from "cmdk";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { type Project } from "~/types";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../lib/hooks/redux-hooks";
+import { setSelectedProject } from "../../lib/features/projects/projects-slice";
 
 export default function BusinessCombobox({
   projects,
 }: {
   projects: Project[];
 }) {
+  const dispatch = useAppDispatch();
+  const project = useAppSelector((state) => state.projects);
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState(project.selectedProject?.name);
+  const [id, setId] = React.useState(project.selectedProject?.id);
+  const router = useRouter();
+
+  useEffect(() => {
+    fetch("/api/projects/set-cookie", {
+      method: "POST",
+      body: JSON.stringify({ value: id }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        router.refresh();
+      })
+      .catch((err) => console.log(err));
+    router.refresh();
+  }, [id, router]);
+
+  useEffect(() => {
+    console.log("state change", project.selectedProject);
+  }, [project.selectedProject]);
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -60,7 +85,24 @@ export default function BusinessCombobox({
                     key={project.id}
                     value={project.name}
                     onSelect={(currentValue) => {
-                      setValue(currentValue === value ? "" : currentValue);
+                      setValue(currentValue);
+                      setId(
+                        () =>
+                          projects.find(
+                            (project) => project.name === currentValue,
+                          )?.id ?? "",
+                      );
+                      dispatch(
+                        setSelectedProject({
+                          ...project,
+                          createdAt: project.createdAt
+                            ? new Date(project.createdAt).toISOString()
+                            : "",
+                          updatedAt: project.updatedAt
+                            ? new Date(project.updatedAt).toISOString()
+                            : "",
+                        }),
+                      );
                       setOpen(false);
                     }}
                   >

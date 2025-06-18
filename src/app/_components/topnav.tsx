@@ -3,10 +3,15 @@ import { ModeToggle } from "./mode-toggle";
 import { Button } from "~/components/ui/button";
 import SlashSeparator from "./slash-separator";
 import BusinessCombobox from "./busines-selector-combobox";
-import { getMyProjects } from "../../server/queries";
+import { getMyProjects } from "~/server/queries";
+import { cookies } from "next/headers";
 
 export default async function TopNav() {
   const projects = await getMyProjects();
+  const selectedProjectId = (await cookies()).get("selected_project")?.value;
+  const selectedProject = projects.find(
+    (proj) => proj.id === selectedProjectId,
+  );
 
   return (
     <nav className="bg-background border-foreground z-20 flex w-full items-center justify-between border-b p-4 px-10 text-xl font-semibold">

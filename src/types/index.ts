@@ -3,6 +3,6 @@ export type Project = {
   name: string;
   concept: string | null;
   userId: string;
-  createdAt: Date;
-  updatedAt: Date | null;
+  createdAt: Date | string;
+  updatedAt: Date | null | string;
 };

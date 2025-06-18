@@ -11,7 +11,6 @@ export default async function HomePage() {
   if (user.userId) {
     redirect("/dashboard");
   }
-
   return (
     <div className="bg-background h-full w-full">
       <div className="space-between my-20 flex h-[70vh] w-full items-center justify-around rounded-lg p-10">

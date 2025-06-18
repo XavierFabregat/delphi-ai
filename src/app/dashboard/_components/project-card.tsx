@@ -1,7 +1,7 @@
 import { Settings } from "lucide-react";
 import { type Project } from "~/types";
 import { Progress } from "~/components/ui/progress";
-import { nameToPattern } from "~/utils/nameToPatterns";
+import { nameToPattern } from "~/lib/utils/nameToPatterns";
 
 export default function ProjectCard({ project }: { project: Project }) {
   const bgPattern = nameToPattern(project.name);

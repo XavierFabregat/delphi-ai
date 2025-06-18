@@ -1,9 +1,26 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
 
 export default clerkMiddleware(async (auth, request) => {
   if (isProtectedRoute(request)) await auth.protect();
+  const { userId } = await auth();
+
+  if (!userId) return NextResponse.next();
+
+  const res = NextResponse.next();
+
+  const cookie = request.cookies.get("selected_project");
+
+  if (!cookie) {
+    res.cookies.set("selected_project", "TEST", {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 1 week
+    });
+  }
+
+  return res;
 });
 
 export const config = {

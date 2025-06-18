@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
         id: evt.data.id,
         email: evt.data.email_addresses[0]?.email_address,
       });
-      console.log(syncedUser);
       return new NextResponse(JSON.stringify(syncedUser), { status: 200 });
     } else {
       throw new Error(`Webhook not yet implemented: ${eventType}`);

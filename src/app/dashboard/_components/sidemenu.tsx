@@ -12,7 +12,7 @@ import {
   useSidebar,
 } from "~/components/ui/sidebar";
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 
 // Menu items.
 const items = [

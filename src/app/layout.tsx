@@ -6,7 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import TopNav from "./_components/topnav";
 import { ThemeProvider } from "../components/theme-provider";
 import { SidebarProvider } from "../components/ui/sidebar";
-import QueryProvider from "../providers/react-query";
+import StoreProvider from "../providers/store-provider";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -26,7 +26,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
         <body>
-          <QueryProvider>
+          <StoreProvider>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
@@ -40,7 +40,7 @@ export default function RootLayout({
                 </div>
               </SidebarProvider>
             </ThemeProvider>
-          </QueryProvider>
+          </StoreProvider>
         </body>
       </html>
     </ClerkProvider>
