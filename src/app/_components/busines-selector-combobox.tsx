@@ -106,6 +106,7 @@ export default function BusinessCombobox({
                         }),
                       );
                       setOpen(false);
+                      router.replace(`/dashboard/projects/${project.id}`);
                     }}
                   >
                     {project.name}
