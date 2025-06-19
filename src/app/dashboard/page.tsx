@@ -1,11 +1,8 @@
 import { getMyProjects } from "~/server/queries";
 import ProjectCard from "./_components/project-card";
-// import { cookies } from "next/headers";
 
 export default async function Dashboard() {
   const projects = await getMyProjects();
-
-  // const selectedProject = (await cookies()).get("selected_project");
 
   return (
     <div className="relative flex h-full w-full items-start justify-center">

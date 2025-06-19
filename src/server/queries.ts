@@ -14,3 +14,17 @@ export async function getMyProjects() {
 
   return projects;
 }
+
+export async function getProjectById(id: string) {
+  const user = await auth();
+
+  if (!user.userId) throw new Error("Unauthorized");
+
+  const project = await db.query.businessIdeas.findFirst({
+    where: (model, { eq, and }) =>
+      and(eq(model.id, id), eq(model.userId, user.userId)),
+    orderBy: (model, { desc }) => desc(model.createdAt),
+  });
+
+  return project;
+}

@@ -23,7 +23,7 @@ import { CommandSeparator } from "cmdk";
 import { redirect, useRouter } from "next/navigation";
 import { type Project } from "~/types";
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../lib/hooks/redux-hooks";
+import { useAppDispatch } from "../../lib/hooks/redux-hooks";
 import { setSelectedProject } from "../../lib/features/projects/projects-slice";
 
 export default function BusinessCombobox({
@@ -34,7 +34,6 @@ export default function BusinessCombobox({
   selectedProject: Project | undefined;
 }) {
   const dispatch = useAppDispatch();
-  const project = useAppSelector((state) => state.projects);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(selectedProject?.name);
   const [id, setId] = React.useState(selectedProject?.id);
@@ -53,10 +52,6 @@ export default function BusinessCombobox({
       .catch((err) => console.log(err));
     router.refresh();
   }, [id, router]);
-
-  useEffect(() => {
-    console.log("state change", project.selectedProject);
-  }, [project.selectedProject]);
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
