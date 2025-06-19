@@ -23,8 +23,11 @@ import { CommandSeparator } from "cmdk";
 import { redirect, useRouter } from "next/navigation";
 import { type Project } from "~/types";
 import { useEffect } from "react";
-import { useAppDispatch } from "../../lib/hooks/redux-hooks";
-import { setSelectedProject } from "../../lib/features/projects/projects-slice";
+import { useAppDispatch, useAppSelector } from "~/lib/hooks/redux-hooks";
+import {
+  selectActiveProject,
+  setSelectedProject,
+} from "~/lib/features/projects/projects-slice";
 
 export default function BusinessCombobox({
   projects,
@@ -34,10 +37,36 @@ export default function BusinessCombobox({
   selectedProject: Project | undefined;
 }) {
   const dispatch = useAppDispatch();
+  const selectedProjectV2 = useAppSelector(selectActiveProject);
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(selectedProject?.name);
-  const [id, setId] = React.useState(selectedProject?.id);
+  const value = selectedProjectV2?.name;
+  const id = selectedProjectV2?.id;
   const router = useRouter();
+
+  useEffect(() => {
+    // If the selected project is already in Redux, do nothing
+    if (selectedProjectV2) return;
+
+    const cookie = document.cookie
+      .split(";")
+      .find((c) => c.trim().startsWith("selected_project="));
+
+    const projectId = cookie?.split("=")[1];
+
+    if (!projectId) return;
+
+    const projectFromCookie = projects.find((proj) => proj.id === projectId);
+
+    if (!projectFromCookie) return;
+
+    dispatch(
+      setSelectedProject({
+        ...projectFromCookie,
+        createdAt: projectFromCookie.createdAt?.toString() ?? "",
+        updatedAt: projectFromCookie.updatedAt?.toString() ?? "",
+      }),
+    );
+  }, [selectedProjectV2, projects, dispatch]);
 
   useEffect(() => {
     fetch("/api/projects/set-cookie", {
@@ -45,12 +74,17 @@ export default function BusinessCombobox({
       body: JSON.stringify({ value: id }),
     })
       .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         router.refresh();
       })
       .catch((err) => console.log(err));
     router.refresh();
+    console.log(
+      document.cookie
+        .split(";")
+        .find((cookie) => cookie.trim().startsWith("selected_project="))
+        ?.split("=")[1],
+    );
   }, [id, router]);
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -82,22 +116,15 @@ export default function BusinessCombobox({
                     key={project.id}
                     value={project.name}
                     onSelect={(currentValue) => {
-                      setValue(currentValue);
-                      setId(
-                        () =>
-                          projects.find(
-                            (project) => project.name === currentValue,
-                          )?.id ?? "",
+                      const project = projects.find(
+                        (project) => project.name === currentValue,
                       );
+                      if (!project) return;
                       dispatch(
                         setSelectedProject({
                           ...project,
-                          createdAt: project.createdAt
-                            ? new Date(project.createdAt).toISOString()
-                            : "",
-                          updatedAt: project.updatedAt
-                            ? new Date(project.updatedAt).toISOString()
-                            : "",
+                          createdAt: project.createdAt?.toString() ?? "",
+                          updatedAt: project.updatedAt?.toString() ?? "",
                         }),
                       );
                       setOpen(false);
