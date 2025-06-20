@@ -18,6 +18,13 @@ source .env
 DB_PASSWORD=$(echo "$DATABASE_URL" | awk -F':' '{print $3}' | awk -F'@' '{print $1}')
 DB_PORT=$(echo "$DATABASE_URL" | awk -F':' '{print $4}' | awk -F'\/' '{print $1}')
 DB_NAME=$(echo "$DATABASE_URL" | awk -F'/' '{print $4}')
+
+if [ -z "$DB_PASSWORD" ] || [ -z "$DB_PORT" ] || [ -z "$DB_NAME" ]; then
+  echo "Error: Failed to extract database parameters from DATABASE_URL."
+  echo "Please check that DATABASE_URL is properly set in the .env file."
+  exit 1
+fi
+
 DB_CONTAINER_NAME="$DB_NAME-postgres"
 
 if ! [ -x "$(command -v docker)" ] && ! [ -x "$(command -v podman)" ]; then
